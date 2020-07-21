@@ -1,32 +1,30 @@
 import style from './src/assets/style/index.styl'; // импорт стилей
-// Реализовать примитивный дропдаун. Изначально все dropdown-menu скрыты через класс .d-none. При клике на dropdown-item должен отображаться блок dropdown-menu который вложен именно в тот dropdown-item на котором произошел клик. При повторном клике на этот же dropdown-item блок dropdown-menu должен закрыться. При клике на любой другой dropdown-item уже открытый dropdown-menu должен закрываться а на тот который кликнули открываться.
+// 1. При наведении на любой из блоков с классом .box все его дочерние элементы должны поменять свой фон на один из списка. ВАЖНО, только дочерние относительно блока на который навели мышь.
 
-const dropdownItems = document.querySelectorAll('.dropdown-item');
-    // В данной переменной мы будем хранить текущее открытое меню
-    let currentOpenedMenu = null;
+// Вот массив (список) рандомных цветов
+// ['red', 'blue', 'olive', 'orange', 'pink', 'yellow', 'green', 'gray', 'aqua', 'brown'];
 
-    function toggleDropdownMenu(e) {
-      // получаем блок меню внутри .dropdown-item
-      const menu = e.currentTarget.querySelector('.dropdown-menu');
-      // метод toggle возвращает булевое значение, если клас удален то вернет false а если добавлен то true. Это значение мы сохраняем в переменную
-      const isAdded = menu.classList.toggle('d-none');
-      // если в currentOpenedMenu уже есть блок и он не равен текущем menu то мы его скрываем
-      if (currentOpenedMenu && currentOpenedMenu !== menu) {
-        currentOpenedMenu.classList.add('d-none');
-      }
-      // Если класс d-none был удален то значет меню видимо и мы его сохраняем в переменную currentOpenedMenu
-      if (!isAdded) {
-        currentOpenedMenu = menu;
-      }
+let colorArr = ['red', 'blue', 'olive', 'orange', 'pink', 'yellow', 'green', 'gray', 'aqua', 'brown'];
+
+const container = document.querySelector('.container');
+const box = document.querySelectorAll('.box');
+
+container.addEventListener('mouseover', event => {
+    if(event.target.firstElementChild) {
+        let randomColor = colorArr[Math.floor(Math.random()*colorArr.length)]
+        event.target.firstElementChild.style.backgroundColor = randomColor;
     }
-
-    dropdownItems.forEach(d => d.addEventListener('click', toggleDropdownMenu));
-
-
-    /// Второй вариант 
-
-    const el = document.getElementsByTagName("div");
-document.body.addEventListener("click", () => {
-  el[1].classList.toggle("d-none") || el[0].classList.toggle("d-none");
 });
+
+//  Возращаете фон обратно когда пользователь уводит мышку с блока.
+
+container.addEventListener('mouseout', event => {
+    event.target.firstElementChild.style.backgroundColor = 'white';
+});
+
+
+
+
+
+
 
