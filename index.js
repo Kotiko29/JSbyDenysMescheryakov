@@ -21,3 +21,12 @@ const dropdownItems = document.querySelectorAll('.dropdown-item');
     }
 
     dropdownItems.forEach(d => d.addEventListener('click', toggleDropdownMenu));
+
+
+    /// Второй вариант 
+
+    const el = document.getElementsByTagName("div");
+document.body.addEventListener("click", () => {
+  el[1].classList.toggle("d-none") || el[0].classList.toggle("d-none");
+});
+
